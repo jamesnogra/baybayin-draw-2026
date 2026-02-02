@@ -1,0 +1,99 @@
+.baybayin-main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.baybayin-auto-height {
+    height: 100vh;
+}
+
+.baybayin-sample-container {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.baybayin-main-draw-container {
+    width: 65%;
+}
+
+.baybayin-sample-images-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10vh;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(242, 242, 242);
+}
+
+.baybayin-each-image {
+    width: 150px;
+    height: 150px;
+    background-color: rgb(255, 248, 240);
+}
+
+.baybayin-draw-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.baybayin-main-canvas {
+    width: min(500px, 80vw);
+    height: min(500px, 80vw);
+    cursor: crosshair;
+    aspect-ratio: 1 / 1;
+    background-color: rgb(255, 248, 240);
+    border: 1px solid rgb(242, 242, 242);
+}
+
+.baybayin-draw-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.baybayin-hide-canvas {
+    display: none;
+}
+
+/* Specifically for widths strictly less than 768px */
+@media (width < 768px) {
+    .baybayin-main-container {
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .baybayin-auto-height {
+        height: auto;
+    }
+
+    .baybayin-sample-container {
+        width: 100%;
+        height: 150px;
+        flex-shrink: 0;
+    }
+
+    .baybayin-main-draw-container {
+        width: 100%;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    .baybayin-sample-images-container {
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 0vh;
+    }
+
+    .baybayin-each-image {
+        width: 100px;
+        height: 100px;
+    }
+}

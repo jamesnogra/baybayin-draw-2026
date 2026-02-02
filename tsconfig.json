@@ -1,32 +1,33 @@
 {
   "compilerOptions": {
-    // Environment setup & latest features
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    // Environment settings - NO DOM for server
+    "lib": ["ESNext"],
     "target": "ESNext",
     "module": "ESNext",
-    "moduleDetection": "force",
     "jsx": "react-jsx",
-    "allowJs": true,
+
+    // Types
+    "types": ["bun-types"],
+
+    // Output settings
+    "declaration": true,
+    "outDir": "dist",
+    "noEmit": false,
+    "emitDecoratorMetadata": true,
 
     // Module resolution
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
-
-    // Strictness and best practices
+    
+    // Strictness
     "strict": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "experimentalDecorators": true,
-
-    // Output control
-    "skipLibCheck": true,
-
-    // Optional strict flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
-  }
+    "experimentalDecorators": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "../client/**/*", "../client"]
 }
