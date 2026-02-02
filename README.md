@@ -35,5 +35,5 @@
     WantedBy=multi-user.target
  ```
  3. Enable the service by running `systemctl enable baybayin-draw` and then start the service `systemctl start baybayin-draw`
-  a. When changes are made from local and then pulled to the remote server, make sure to run the command `bun run scripts/build-client.ts` once and the CTRL+C to exit on that then run `systemctl restart baybayin-draw`
+  - When changes are made from local and then pulled to the remote server, make sure to run the command `bun run scripts/build-client.ts` once and the CTRL+C to exit on that then run `systemctl restart baybayin-draw`
  4. The app can not be accessible at `http://UBUNTU_IP_ADDRESS:8887/`
