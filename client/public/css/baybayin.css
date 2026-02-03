@@ -1,8 +1,3 @@
-html, body {
-    touch-action: none;
-    overflow: hidden;
-}
-
 .baybayin-main-container {
     display: flex;
     flex-direction: row;
@@ -72,6 +67,14 @@ html, body {
 
 /* Specifically for widths strictly less than 768px */
 @media (width < 768px) {
+
+    /* prevent scrolling on the entire page */
+    html,
+    body {
+        touch-action: none;
+        overflow: hidden;
+    }
+
     .baybayin-main-container {
         flex-direction: column;
         height: 100vh;
