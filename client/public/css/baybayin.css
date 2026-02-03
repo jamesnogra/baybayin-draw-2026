@@ -33,6 +33,13 @@
     width: 150px;
     height: 150px;
     background-color: rgb(255, 248, 240);
+    overflow: hidden;
+}
+
+.baybayin-each-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .baybayin-draw-container {

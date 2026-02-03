@@ -17105,27 +17105,37 @@ var import_client = __toESM(require_client(), 1);
 
 // client/src/BaybayinSampleImages.tsx
 var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
-function App() {
+function BaybayinSampleImages({ letter }) {
   return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
     className: "baybayin-sample-images-container",
     children: [
       /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image"
+        className: "baybayin-each-image",
+        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
+          src: `/client/public/images/${letter}_1.png`
+        }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image"
+        className: "baybayin-each-image",
+        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
+          src: `/client/public/images/${letter}_2.png`
+        }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image"
+        className: "baybayin-each-image",
+        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
+          src: `/client/public/images/${letter}_3.png`
+        }, undefined, false, undefined, this)
       }, undefined, false, undefined, this)
     ]
   }, undefined, true, undefined, this);
 }
+var BaybayinSampleImages_default = BaybayinSampleImages;
 
 // client/src/BaybayinDraw.tsx
 var import_react = __toESM(require_react(), 1);
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-function App2() {
+function App() {
   const canvasRef = import_react.useRef(null);
   const canvas7Ref = import_react.useRef(null);
   const canvas5Ref = import_react.useRef(null);
@@ -17285,17 +17295,81 @@ function App2() {
 
 // client/src/BaybayinMainCanvas.tsx
 var jsx_dev_runtime3 = __toESM(require_jsx_dev_runtime(), 1);
-function App3() {
+var letters = [
+  "a",
+  "e_i",
+  "o_u",
+  "ba",
+  "be_bi",
+  "bo_bu",
+  "b",
+  "ka",
+  "ke_ki",
+  "ko_ku",
+  "k",
+  "da",
+  "de_di",
+  "do_du",
+  "d",
+  "ga",
+  "ge_gi",
+  "go_gu",
+  "g",
+  "ha",
+  "he_hi",
+  "ho_hu",
+  "h",
+  "la",
+  "le_li",
+  "lo_lu",
+  "l",
+  "ma",
+  "me_mi",
+  "mo_mu",
+  "m",
+  "na",
+  "ne_ni",
+  "no_nu",
+  "n",
+  "nga",
+  "nge_ngi",
+  "ngo_ngu",
+  "ng",
+  "pa",
+  "pe_pi",
+  "po_pu",
+  "p",
+  "sa",
+  "se_si",
+  "so_su",
+  "s",
+  "ta",
+  "te_ti",
+  "to_tu",
+  "t",
+  "wa",
+  "we_wi",
+  "wo_wu",
+  "w",
+  "ya",
+  "ye_yi",
+  "yo_yu",
+  "y"
+];
+function App2() {
+  const randomLetter = letters[Math.floor(Math.random() * letters.length)];
   return /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
     className: "baybayin-main-container",
     children: [
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-sample-container`,
-        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {}, undefined, false, undefined, this)
+        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(BaybayinSampleImages_default, {
+          letter: randomLetter
+        }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-main-draw-container`,
-        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App2, {}, undefined, false, undefined, this)
+        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {}, undefined, false, undefined, this)
       }, undefined, false, undefined, this)
     ]
   }, undefined, true, undefined, this);
@@ -17305,7 +17379,7 @@ function App3() {
 var jsx_dev_runtime4 = __toESM(require_jsx_dev_runtime(), 1);
 var root = document.getElementById("root");
 if (root) {
-  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App3, {}, undefined, false, undefined, this));
+  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App2, {}, undefined, false, undefined, this));
 }
 
-//# debugId=B9C7E4F6D1FDA43464756E2164756E21
+//# debugId=516CE3BEF4E2214064756E2164756E21
