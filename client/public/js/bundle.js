@@ -17143,7 +17143,7 @@ function App2() {
       canvas.height = rect.height;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = 20;
+      ctx.lineWidth = 15;
       ctx.strokeStyle = "#000";
       [canvas10Ref, canvas5Ref].forEach((ref, idx) => {
         const c = ref.current;
@@ -17232,14 +17232,14 @@ function App2() {
     shiftCanvas(canvas5Ref, 10 + additionalPixelsToMove, 10 + additionalPixelsToMove);
   };
   const shiftCanvas = (ref, shiftX, shiftY) => {
-    const canvas10 = ref.current;
-    if (!canvas10)
+    const currentCanvas = ref.current;
+    if (!currentCanvas)
       return;
-    const ctx = canvas10.getContext("2d");
+    const ctx = currentCanvas.getContext("2d");
     if (!ctx)
       return;
-    const imageData = ctx.getImageData(0, 0, canvas10.width, canvas10.height);
-    ctx.clearRect(0, 0, canvas10.width, canvas10.height);
+    const imageData = ctx.getImageData(0, 0, currentCanvas.width, currentCanvas.height);
+    ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
     ctx.putImageData(imageData, shiftX, shiftY);
   };
   return /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
@@ -17308,4 +17308,4 @@ if (root) {
   import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App3, {}, undefined, false, undefined, this));
 }
 
-//# debugId=4D997FBA1296324964756E2164756E21
+//# debugId=D55F2C2C65B3F25264756E2164756E21

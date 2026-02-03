@@ -25,7 +25,7 @@ export default function App() {
             // Configure drawing style
             ctx.lineCap = 'round'
             ctx.lineJoin = 'round'
-            ctx.lineWidth = 20
+            ctx.lineWidth = 15
             ctx.strokeStyle = '#000';
 
             // Initialize the other canvases
@@ -125,14 +125,14 @@ export default function App() {
     }
 
     const shiftCanvas = (ref: any, shiftX: number, shiftY: number) => {
-        const canvas10 = ref.current
-        if (!canvas10) return
-        const ctx = canvas10.getContext('2d')
+        const currentCanvas = ref.current
+        if (!currentCanvas) return
+        const ctx = currentCanvas.getContext('2d')
         if (!ctx) return
         // Get the current canvas image data
-        const imageData = ctx.getImageData(0, 0, canvas10.width, canvas10.height)
+        const imageData = ctx.getImageData(0, 0, currentCanvas.width, currentCanvas.height)
         // Clear the canvas
-        ctx.clearRect(0, 0, canvas10.width, canvas10.height)
+        ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height)
         // Draw the image data shifted
         ctx.putImageData(imageData, shiftX, shiftY)
     }
