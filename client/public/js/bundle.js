@@ -17127,7 +17127,7 @@ var import_react = __toESM(require_react(), 1);
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 function App2() {
   const canvasRef = import_react.useRef(null);
-  const canvas10Ref = import_react.useRef(null);
+  const canvas7Ref = import_react.useRef(null);
   const canvas5Ref = import_react.useRef(null);
   const [isDrawing, setIsDrawing] = import_react.useState(false);
   import_react.useEffect(() => {
@@ -17143,9 +17143,9 @@ function App2() {
       canvas.height = rect.height;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = 15;
+      ctx.lineWidth = 10;
       ctx.strokeStyle = "#000";
-      [canvas10Ref, canvas5Ref].forEach((ref, idx) => {
+      [canvas7Ref, canvas5Ref].forEach((ref, idx) => {
         const c = ref.current;
         if (!c)
           return;
@@ -17156,7 +17156,7 @@ function App2() {
         c.height = rect.height;
         context.lineCap = "round";
         context.lineJoin = "round";
-        context.lineWidth = idx === 0 ? 10 : 5;
+        context.lineWidth = idx === 0 ? 7 : 5;
         context.strokeStyle = "#000";
       });
     }, 0);
@@ -17183,7 +17183,7 @@ function App2() {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas10Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17201,7 +17201,7 @@ function App2() {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas10Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17216,7 +17216,7 @@ function App2() {
     setIsDrawing(false);
   };
   const clearCanvas = () => {
-    [canvasRef, canvas10Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
       const canvas = ref.current;
       if (!canvas)
         return;
@@ -17228,7 +17228,7 @@ function App2() {
   };
   const submitCanvas = () => {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
-    shiftCanvas(canvas10Ref, -5 - additionalPixelsToMove, -5 - additionalPixelsToMove);
+    shiftCanvas(canvas7Ref, -5 - additionalPixelsToMove, -5 - additionalPixelsToMove);
     shiftCanvas(canvas5Ref, 10 + additionalPixelsToMove, 10 + additionalPixelsToMove);
   };
   const shiftCanvas = (ref, shiftX, shiftY) => {
@@ -17257,7 +17257,7 @@ function App2() {
         onTouchEnd: stopDrawing
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
-        ref: canvas10Ref,
+        ref: canvas7Ref,
         className: "baybayin-main-canvas baybayin-hide-canvas"
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
@@ -17308,4 +17308,4 @@ if (root) {
   import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App3, {}, undefined, false, undefined, this));
 }
 
-//# debugId=D55F2C2C65B3F25264756E2164756E21
+//# debugId=B9C7E4F6D1FDA43464756E2164756E21

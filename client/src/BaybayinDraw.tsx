@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react'
 
 export default function App() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const canvas10Ref = useRef<HTMLCanvasElement>(null)
+    const canvas7Ref = useRef<HTMLCanvasElement>(null)
     const canvas5Ref = useRef<HTMLCanvasElement>(null)
     const [isDrawing, setIsDrawing] = useState(false)
 
@@ -25,11 +25,11 @@ export default function App() {
             // Configure drawing style
             ctx.lineCap = 'round'
             ctx.lineJoin = 'round'
-            ctx.lineWidth = 15
+            ctx.lineWidth = 10
             ctx.strokeStyle = '#000';
 
             // Initialize the other canvases
-            [canvas10Ref, canvas5Ref].forEach((ref, idx) => {
+            [canvas7Ref, canvas5Ref].forEach((ref, idx) => {
                 const c = ref.current
                 if (!c) return
                 const context = c.getContext('2d')
@@ -39,7 +39,7 @@ export default function App() {
                 c.height = rect.height
                 context.lineCap = 'round'
                 context.lineJoin = 'round'
-                context.lineWidth = idx === 0 ? 10 : 5
+                context.lineWidth = idx === 0 ? 7 : 5
                 context.strokeStyle = '#000'
             })
         }, 0)
@@ -73,7 +73,7 @@ export default function App() {
         if (!coords) return
 
         // Start path on all three canvases
-        [canvasRef, canvas10Ref, canvas5Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas5Ref].forEach(ref => {
             const c = ref.current
             if (!c) return
             const ctx = c.getContext('2d')
@@ -93,7 +93,7 @@ export default function App() {
         if (!coords) return
 
         // Draw on all three canvases
-        [canvasRef, canvas10Ref, canvas5Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas5Ref].forEach(ref => {
             const c = ref.current
             if (!c) return
             const ctx = c.getContext('2d')
@@ -108,7 +108,7 @@ export default function App() {
     }
 
     const clearCanvas = () => {
-        [canvasRef, canvas10Ref, canvas5Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas5Ref].forEach(ref => {
             const canvas = ref.current
             if (!canvas) return
             const ctx = canvas.getContext('2d')
@@ -120,7 +120,7 @@ export default function App() {
     const submitCanvas = () => {
         // Do not add movement too much if in mobile view
         const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10
-        shiftCanvas(canvas10Ref, -5-additionalPixelsToMove, -5-additionalPixelsToMove)
+        shiftCanvas(canvas7Ref, -5-additionalPixelsToMove, -5-additionalPixelsToMove)
         shiftCanvas(canvas5Ref, 10+additionalPixelsToMove, 10+additionalPixelsToMove)
     }
 
@@ -150,7 +150,7 @@ export default function App() {
                 onTouchMove={draw}
                 onTouchEnd={stopDrawing}
             />
-            <canvas ref={canvas10Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
+            <canvas ref={canvas7Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <canvas ref={canvas5Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <div className="baybayin-draw-buttons">
                 <button className="btn btn-success btn-lg" onClick={submitCanvas}>Submit</button>
