@@ -1,3 +1,8 @@
+html, body {
+    touch-action: none;
+    overflow: hidden;
+}
+
 .baybayin-main-container {
     display: flex;
     flex-direction: row;
@@ -44,6 +49,9 @@
 }
 
 .baybayin-main-canvas {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
     width: min(500px, 80vw);
     height: min(500px, 80vw);
     cursor: crosshair;
@@ -56,6 +64,10 @@
     display: flex;
     gap: 10px;
     margin-top: 10px;
+}
+
+.baybayin-hide-canvas {
+    display: none;
 }
 
 /* Specifically for widths strictly less than 768px */
