@@ -18,6 +18,21 @@ async function buildClient() {
   } else {
     console.log('✅ Client bundle created at:', join(projectRoot, 'client/public/js/bundle.js'));
   }
+
+  // Build manage page bundle
+  const manageResult = await Bun.build({
+    entrypoints: [join(projectRoot, 'client/src/manage.tsx')],
+    outdir: join(projectRoot, 'client/public/js'),
+    naming: 'manage-bundle.js',
+    minify: false,
+    sourcemap: 'external',
+  });
+  
+  if (!manageResult.success) {
+    console.error('❌ Manage build failed:', manageResult.logs);
+  } else {
+    console.log('✅ Manage bundle created at:', join(projectRoot, 'client/public/js/manage-bundle.js'));
+  }
 }
 
 // Initial build

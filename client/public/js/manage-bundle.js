@@ -17100,322 +17100,205 @@ var require_jsx_dev_runtime = __commonJS((exports, module) => {
   }
 });
 
-// client/src/index.tsx
+// client/src/manage.tsx
 var import_client = __toESM(require_client(), 1);
 
-// client/src/BaybayinSampleImages.tsx
-var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
-function BaybayinSampleImages({ letter }) {
-  return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-    className: "baybayin-sample-images-container",
-    children: [
-      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image",
-        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
-          src: `/client/public/images/${letter}_1.png`
-        }, undefined, false, undefined, this)
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image",
-        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
-          src: `/client/public/images/${letter}_2.png`
-        }, undefined, false, undefined, this)
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "baybayin-each-image",
-        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
-          src: `/client/public/images/${letter}_3.png`
-        }, undefined, false, undefined, this)
-      }, undefined, false, undefined, this)
-    ]
-  }, undefined, true, undefined, this);
-}
-var BaybayinSampleImages_default = BaybayinSampleImages;
-
-// client/src/BaybayinDraw.tsx
+// client/src/ManageLetter.tsx
 var import_react = __toESM(require_react(), 1);
-var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-function App({ letter }) {
-  const canvasRef = import_react.useRef(null);
-  const canvas7Ref = import_react.useRef(null);
-  const canvas5Ref = import_react.useRef(null);
-  const [isDrawing, setIsDrawing] = import_react.useState(false);
-  const [uploading, setUploading] = import_react.useState(false);
+var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
+function ImageGallery({ letter }) {
+  const [images, setImages] = import_react.useState([]);
+  const [loading, setLoading] = import_react.useState(true);
+  const [deleting, setDeleting] = import_react.useState(null);
   import_react.useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas)
-      return;
-    setTimeout(() => {
-      const ctx = canvas.getContext("2d");
-      if (!ctx)
-        return;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.lineWidth = 10;
-      ctx.strokeStyle = "#000";
-      [canvas7Ref, canvas5Ref].forEach((ref, idx) => {
-        const c = ref.current;
-        if (!c)
-          return;
-        const context = c.getContext("2d");
-        if (!context)
-          return;
-        c.width = rect.width;
-        c.height = rect.height;
-        context.lineCap = "round";
-        context.lineJoin = "round";
-        context.lineWidth = idx === 0 ? 7 : 5;
-        context.strokeStyle = "#000";
-      });
-    }, 0);
-  }, []);
-  const getCoordinates = (e) => {
-    const canvas = canvasRef.current;
-    if (!canvas)
-      return null;
-    const rect = canvas.getBoundingClientRect();
-    if ("touches" in e) {
-      const touch = e.touches[0];
-      return {
-        x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top
-      };
-    } else {
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-    }
-  };
-  const startDrawing = (e) => {
-    const coords = getCoordinates(e);
-    if (!coords)
-      return;
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
-      const c = ref.current;
-      if (!c)
-        return;
-      const ctx = c.getContext("2d");
-      if (!ctx)
-        return;
-      ctx.beginPath();
-      ctx.moveTo(coords.x, coords.y);
-    });
-    setIsDrawing(true);
-  };
-  const draw = (e) => {
-    if (!isDrawing)
-      return;
-    const coords = getCoordinates(e);
-    if (!coords)
-      return;
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
-      const c = ref.current;
-      if (!c)
-        return;
-      const ctx = c.getContext("2d");
-      if (!ctx)
-        return;
-      ctx.lineTo(coords.x, coords.y);
-      ctx.stroke();
-    });
-  };
-  const stopDrawing = () => {
-    setIsDrawing(false);
-  };
-  const clearCanvas = () => {
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
-      const canvas = ref.current;
-      if (!canvas)
-        return;
-      const ctx = canvas.getContext("2d");
-      if (!ctx)
-        return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-  };
-  const submitCanvas = async () => {
-    const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
-    shiftCanvas(canvas7Ref, -5 - additionalPixelsToMove, -5 - additionalPixelsToMove);
-    shiftCanvas(canvas5Ref, 10 + additionalPixelsToMove, 10 + additionalPixelsToMove);
-    setUploading(true);
+    fetchImages();
+  }, [letter]);
+  const fetchImages = async () => {
+    setLoading(true);
     try {
-      const canvasMain = canvasRef.current?.toDataURL("image/png");
-      const canvas7 = canvas7Ref.current?.toDataURL("image/png");
-      const canvas5 = canvas5Ref.current?.toDataURL("image/png");
-      const response = await fetch("/upload-canvas", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          canvasMain,
-          canvas7,
-          canvas5,
-          letter
-        })
-      });
-      const result = await response.json();
-      if (result.success) {
-        clearCanvas();
+      const response = await fetch(`/images/${letter}`);
+      const data = await response.json();
+      if (data.success) {
+        setImages(data.images || []);
       } else {
-        alert("Upload failed: " + result.message);
+        setImages([]);
       }
     } catch (error) {
-      console.error("Upload error:", error);
-      alert("Upload failed");
+      console.error("Error fetching images:", error);
+      setImages([]);
     } finally {
-      setUploading(false);
-      window.location.reload();
+      setLoading(false);
     }
   };
-  const shiftCanvas = (ref, shiftX, shiftY) => {
-    const currentCanvas = ref.current;
-    if (!currentCanvas)
+  const deleteImage = async (filename) => {
+    if (!confirm(`Are you sure you want to delete "${filename}"?`)) {
       return;
-    const ctx = currentCanvas.getContext("2d");
-    if (!ctx)
-      return;
-    const imageData = ctx.getImageData(0, 0, currentCanvas.width, currentCanvas.height);
-    ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
-    ctx.putImageData(imageData, shiftX, shiftY);
+    }
+    setDeleting(filename);
+    try {
+      const response = await fetch(`/images/${letter}/${filename}`, {
+        method: "DELETE"
+      });
+      const data = await response.json();
+      if (data.success) {
+        setImages(images.filter((img) => img.filename !== filename));
+        alert("Image deleted successfully!");
+      } else {
+        alert("Failed to delete image: " + data.message);
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete image");
+    } finally {
+      setDeleting(null);
+    }
   };
-  return /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
-    className: "baybayin-draw-container",
-    children: [
-      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
-        ref: canvasRef,
-        className: "baybayin-main-canvas",
-        onMouseDown: startDrawing,
-        onMouseMove: draw,
-        onMouseUp: stopDrawing,
-        onMouseLeave: stopDrawing,
-        onTouchStart: startDrawing,
-        onTouchMove: draw,
-        onTouchEnd: stopDrawing
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
-        ref: canvas7Ref,
-        className: "baybayin-main-canvas baybayin-hide-canvas"
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
-        ref: canvas5Ref,
-        className: "baybayin-main-canvas baybayin-hide-canvas"
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
-        className: "baybayin-draw-buttons",
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(parseInt(timestamp));
+    return date.toLocaleString();
+  };
+  if (loading) {
+    return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+      className: "container mt-5",
+      children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+        className: "text-center",
         children: [
-          /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
-            className: "btn btn-success btn-lg",
-            onClick: submitCanvas,
-            disabled: uploading,
-            children: uploading ? "Uploading..." : "Submit"
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+            className: "spinner-border text-primary",
+            role: "status",
+            children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("span", {
+              className: "visually-hidden",
+              children: "Loading..."
+            }, undefined, false, undefined, this)
           }, undefined, false, undefined, this),
-          /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
-            className: "btn btn-warning btn-lg",
-            onClick: clearCanvas,
-            children: "Clear"
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+            className: "mt-3",
+            children: "Loading images..."
           }, undefined, false, undefined, this)
         ]
       }, undefined, true, undefined, this)
-    ]
-  }, undefined, true, undefined, this);
-}
-
-// client/src/letters.tsx
-var letters_default = [
-  "a",
-  "e_i",
-  "o_u",
-  "ba",
-  "be_bi",
-  "bo_bu",
-  "b",
-  "ka",
-  "ke_ki",
-  "ko_ku",
-  "k",
-  "da",
-  "de_di",
-  "do_du",
-  "d",
-  "ga",
-  "ge_gi",
-  "go_gu",
-  "g",
-  "ha",
-  "he_hi",
-  "ho_hu",
-  "h",
-  "la",
-  "le_li",
-  "lo_lu",
-  "l",
-  "ma",
-  "me_mi",
-  "mo_mu",
-  "m",
-  "na",
-  "ne_ni",
-  "no_nu",
-  "n",
-  "nga",
-  "nge_ngi",
-  "ngo_ngu",
-  "ng",
-  "pa",
-  "pe_pi",
-  "po_pu",
-  "p",
-  "sa",
-  "se_si",
-  "so_su",
-  "s",
-  "ta",
-  "te_ti",
-  "to_tu",
-  "t",
-  "wa",
-  "we_wi",
-  "wo_wu",
-  "w",
-  "ya",
-  "ye_yi",
-  "yo_yu",
-  "y"
-];
-
-// client/src/BaybayinMainCanvas.tsx
-var jsx_dev_runtime3 = __toESM(require_jsx_dev_runtime(), 1);
-function App2() {
-  const randomLetter = letters_default[Math.floor(Math.random() * letters_default.length)];
-  return /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
-    className: "baybayin-main-container",
+    }, undefined, false, undefined, this);
+  }
+  return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+    className: "container mt-4",
     children: [
-      /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
-        className: `baybayin-auto-height baybayin-sample-container`,
-        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(BaybayinSampleImages_default, {
-          letter: randomLetter
-        }, undefined, false, undefined, this)
+      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+        className: "d-flex justify-content-between align-items-center mb-4",
+        children: [
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("h1", {
+            children: [
+              "Gallery for Letter: ",
+              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("span", {
+                className: "text-primary",
+                children: letter
+              }, undefined, false, undefined, this)
+            ]
+          }, undefined, true, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
+            href: "/",
+            className: "btn btn-primary",
+            children: "Back to Drawing"
+          }, undefined, false, undefined, this)
+        ]
+      }, undefined, true, undefined, this),
+      images.length === 0 ? /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+        className: "alert alert-info",
+        role: "alert",
+        children: [
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("h4", {
+            className: "alert-heading",
+            children: "No images yet"
+          }, undefined, false, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+            children: [
+              'No images have been uploaded for the letter "',
+              letter,
+              '" yet.'
+            ]
+          }, undefined, true, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("hr", {}, undefined, false, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+            className: "mb-0",
+            children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
+              href: "/",
+              className: "btn btn-primary",
+              children: "Start Drawing"
+            }, undefined, false, undefined, this)
+          }, undefined, false, undefined, this)
+        ]
+      }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+        className: "row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4",
+        children: images.map((image) => /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+          className: "col",
+          children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+            className: "card h-100 shadow-sm",
+            children: [
+              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
+                src: image.url,
+                className: "card-img-top",
+                alt: image.filename,
+                style: { height: "250px", objectFit: "contain", backgroundColor: "#f8f9fa" }
+              }, undefined, false, undefined, this),
+              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+                className: "card-body",
+                children: [
+                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+                    className: "card-text text-muted small mb-2",
+                    children: formatTimestamp(image.timestamp)
+                  }, undefined, false, undefined, this),
+                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+                    className: "card-text small text-truncate",
+                    title: image.filename,
+                    children: image.filename
+                  }, undefined, false, undefined, this)
+                ]
+              }, undefined, true, undefined, this),
+              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+                className: "card-footer bg-transparent",
+                children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("button", {
+                  className: "btn btn-danger btn-sm w-100",
+                  onClick: () => deleteImage(image.filename),
+                  disabled: deleting === image.filename,
+                  children: deleting === image.filename ? /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
+                    children: [
+                      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("span", {
+                        className: "spinner-border spinner-border-sm me-2",
+                        role: "status",
+                        "aria-hidden": "true"
+                      }, undefined, false, undefined, this),
+                      "Deleting..."
+                    ]
+                  }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
+                    children: "Delete"
+                  }, undefined, false, undefined, this)
+                }, undefined, false, undefined, this)
+              }, undefined, false, undefined, this)
+            ]
+          }, undefined, true, undefined, this)
+        }, image.filename, false, undefined, this))
       }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
-        className: `baybayin-auto-height baybayin-main-draw-container`,
-        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {
-          letter: randomLetter
-        }, undefined, false, undefined, this)
+      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+        className: "mt-4 mb-4",
+        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+          className: "text-muted",
+          children: [
+            "Total images: ",
+            images.length
+          ]
+        }, undefined, true, undefined, this)
       }, undefined, false, undefined, this)
     ]
   }, undefined, true, undefined, this);
 }
 
-// client/src/index.tsx
-var jsx_dev_runtime4 = __toESM(require_jsx_dev_runtime(), 1);
+// client/src/manage.tsx
+var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 var root = document.getElementById("root");
+var letter = root?.getAttribute("data-letter") || "A";
 if (root) {
-  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App2, {}, undefined, false, undefined, this));
+  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime2.jsxDEV(ImageGallery, {
+    letter
+  }, undefined, false, undefined, this));
 }
 
-//# debugId=AC562FEC53A06E6264756E2164756E21
+//# debugId=4AB1A5EE4F9B835564756E2164756E21
