@@ -66,6 +66,13 @@ app.get('/manage', (c) => {
         <div class="container mt-5">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Manage Baybayin Letters</h1>
+            <a href="/download-all" class="btn btn-success me-2" download>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+              </svg>
+              Download All
+            </a>
             <a href="/" class="btn btn-primary">Back to Drawing</a>
           </div>
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
@@ -192,6 +199,77 @@ app.delete('/images/:letter/:filename', async (c) => {
     return c.json({
       success: false,
       message: 'Failed to delete image'
+    }, 500)
+  }
+})
+
+app.get('/download-all', async (c) => {
+  try {
+    const { spawn } = require('child_process');
+    
+    // Check if uploads directory exists and has content
+    try {
+      const files = await readdir(uploadsDir)
+      if (files.length === 0) {
+        return c.json({ 
+          success: false, 
+          message: 'No files to download' 
+        }, 404)
+      }
+    } catch (error) {
+      return c.json({ 
+        success: false, 
+        message: 'Uploads directory not found' 
+      }, 404)
+    }
+    
+    // Create a temporary zip file
+    const zipPath = join(projectRoot, `uploads-${Date.now()}.zip`)
+    
+    // Use system zip command to create the archive
+    await new Promise((resolve, reject) => {
+      // Change to uploads directory and zip everything inside it
+      const zip = spawn('zip', ['-r', zipPath, '.'], {
+        cwd: uploadsDir
+      })
+      
+      let stderr = ''
+      
+      zip.stderr.on('data', (data: Buffer) => {
+        stderr += data.toString()
+      })
+      
+      zip.on('close', (code: number) => {
+        if (code === 0) {
+          resolve(true)
+        } else {
+          reject(new Error(`Zip process exited with code ${code}: ${stderr}`))
+        }
+      })
+      
+      zip.on('error', (err: Error) => {
+        reject(err)
+      })
+    })
+    
+    // Read the zip file
+    const zipFile = Bun.file(zipPath)
+    const buffer = await zipFile.arrayBuffer()
+    
+    // Clean up the temporary zip file
+    await unlink(zipPath)
+    
+    // Send the zip file
+    return c.body(buffer, 200, {
+      'Content-Type': 'application/zip',
+      'Content-Disposition': `attachment; filename="baybayin-uploads-${Date.now()}.zip"`
+    })
+    
+  } catch (error) {
+    console.error('Download error:', error)
+    return c.json({ 
+      success: false, 
+      message: 'Failed to create download: ' + (error as Error).message 
     }, 500)
   }
 })
