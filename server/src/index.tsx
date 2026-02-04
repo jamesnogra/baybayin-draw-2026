@@ -4,6 +4,7 @@ import { serveStatic } from 'hono/bun'
 import { join } from 'path'
 import { mkdir, readdir, unlink } from 'fs/promises'
 import type { ApiResponse } from 'shared/dist'
+import sharp from 'sharp'
 import letters from '../../client/src/letters'
 
 const projectRoot = join(import.meta.dir, '../../')
@@ -108,14 +109,24 @@ app.post('/upload-canvas', async (c) => {
     // Create letter-specific directory
     await mkdir(`${uploadsDir}/${letter}`, { recursive: true })
     
-    // Convert base64 to buffer and save
+    // Convert base64 to buffer, resize, and save
     const saveImage = async (base64Data: string, suffix: string) => {
       // Remove data:image/png;base64, prefix
       const base64Image = base64Data.replace(/^data:image\/png;base64,/, '')
       const buffer = Buffer.from(base64Image, 'base64')
+      
+      // Resize image to 256x256
+      const resizedBuffer = await sharp(buffer)
+        .resize(256, 256, {
+          fit: 'contain',
+          background: { r: 255, g: 255, b: 255, alpha: 1 } // white background
+        })
+        .png()
+        .toBuffer()
+      
       const filename = `canvas_${suffix}_${timestamp}.png`
       const filepath = join(`${uploadsDir}/${letter}`, filename)
-      await Bun.write(filepath, buffer)
+      await Bun.write(filepath, resizedBuffer)
       return filename
     }
 
