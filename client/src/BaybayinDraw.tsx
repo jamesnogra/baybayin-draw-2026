@@ -1,10 +1,15 @@
 import { useRef, useEffect, useState } from 'react'
 
-export default function App() {
+type BaybayinSampleImagesProps = {
+    letter: string;
+};
+
+export default function App({ letter }: BaybayinSampleImagesProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const canvas7Ref = useRef<HTMLCanvasElement>(null)
     const canvas5Ref = useRef<HTMLCanvasElement>(null)
     const [isDrawing, setIsDrawing] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -117,11 +122,46 @@ export default function App() {
         })
     }
 
-    const submitCanvas = () => {
+    const submitCanvas = async () => {
         // Do not add movement too much if in mobile view
         const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10
         shiftCanvas(canvas7Ref, -5-additionalPixelsToMove, -5-additionalPixelsToMove)
         shiftCanvas(canvas5Ref, 10+additionalPixelsToMove, 10+additionalPixelsToMove)
+
+        setUploading(true)
+        
+        try {
+            const canvasMain = canvasRef.current?.toDataURL('image/png')
+            const canvas7 = canvas7Ref.current?.toDataURL('image/png')
+            const canvas5 = canvas5Ref.current?.toDataURL('image/png')
+
+            const response = await fetch('/upload-canvas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    canvasMain,
+                    canvas7,
+                    canvas5,
+                    letter
+                })
+            })
+
+            const result = await response.json()
+            
+            if (result.success) {
+                clearCanvas()
+            } else {
+                alert('Upload failed: ' + result.message)
+            }
+        } catch (error) {
+            console.error('Upload error:', error)
+            alert('Upload failed')
+        } finally {
+            setUploading(false)
+            window.location.reload()
+        }
     }
 
     const shiftCanvas = (ref: any, shiftX: number, shiftY: number) => {
@@ -153,7 +193,9 @@ export default function App() {
             <canvas ref={canvas7Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <canvas ref={canvas5Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <div className="baybayin-draw-buttons">
-                <button className="btn btn-success btn-lg" onClick={submitCanvas}>Submit</button>
+                <button className="btn btn-success btn-lg" onClick={submitCanvas} disabled={uploading}>
+                    {uploading ? 'Uploading...' : 'Submit'}
+                </button>
                 <button className="btn btn-warning btn-lg" onClick={clearCanvas}>Clear</button>
             </div>
         </div>

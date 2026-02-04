@@ -17135,11 +17135,12 @@ var BaybayinSampleImages_default = BaybayinSampleImages;
 // client/src/BaybayinDraw.tsx
 var import_react = __toESM(require_react(), 1);
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-function App() {
+function App({ letter }) {
   const canvasRef = import_react.useRef(null);
   const canvas7Ref = import_react.useRef(null);
   const canvas5Ref = import_react.useRef(null);
   const [isDrawing, setIsDrawing] = import_react.useState(false);
+  const [uploading, setUploading] = import_react.useState(false);
   import_react.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas)
@@ -17236,10 +17237,40 @@ function App() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
   };
-  const submitCanvas = () => {
+  const submitCanvas = async () => {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
     shiftCanvas(canvas7Ref, -5 - additionalPixelsToMove, -5 - additionalPixelsToMove);
     shiftCanvas(canvas5Ref, 10 + additionalPixelsToMove, 10 + additionalPixelsToMove);
+    setUploading(true);
+    try {
+      const canvasMain = canvasRef.current?.toDataURL("image/png");
+      const canvas7 = canvas7Ref.current?.toDataURL("image/png");
+      const canvas5 = canvas5Ref.current?.toDataURL("image/png");
+      const response = await fetch("/upload-canvas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          canvasMain,
+          canvas7,
+          canvas5,
+          letter
+        })
+      });
+      const result = await response.json();
+      if (result.success) {
+        clearCanvas();
+      } else {
+        alert("Upload failed: " + result.message);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+      window.location.reload();
+    }
   };
   const shiftCanvas = (ref, shiftX, shiftY) => {
     const currentCanvas = ref.current;
@@ -17280,7 +17311,8 @@ function App() {
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
             className: "btn btn-success btn-lg",
             onClick: submitCanvas,
-            children: "Submit"
+            disabled: uploading,
+            children: uploading ? "Uploading..." : "Submit"
           }, undefined, false, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
             className: "btn btn-warning btn-lg",
@@ -17369,7 +17401,9 @@ function App2() {
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-main-draw-container`,
-        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {}, undefined, false, undefined, this)
+        children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {
+          letter: randomLetter
+        }, undefined, false, undefined, this)
       }, undefined, false, undefined, this)
     ]
   }, undefined, true, undefined, this);
@@ -17382,4 +17416,4 @@ if (root) {
   import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App2, {}, undefined, false, undefined, this));
 }
 
-//# debugId=516CE3BEF4E2214064756E2164756E21
+//# debugId=66959208474A0C2B64756E2164756E21

@@ -42,3 +42,5 @@ bun.lockb
 
 # Turbo
 .turbo
+
+client/public/uploads/

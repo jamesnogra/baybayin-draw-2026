@@ -28,7 +28,7 @@ export default function App() {
                 <BaybayinSampleImages letter={randomLetter} />
             </div>
             <div className={`baybayin-auto-height baybayin-main-draw-container`}>
-                <BaybayinDraw />
+                <BaybayinDraw letter={randomLetter} />
             </div>
         </div>
     )
