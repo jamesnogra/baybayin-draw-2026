@@ -122,11 +122,15 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         })
     }
 
+    const randomPixelsToShift = () => {
+        return Math.floor(Math.random() * 21) - 10
+    }
+
     const submitCanvas = async () => {
         // Do not add movement too much if in mobile view
         const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10
-        shiftCanvas(canvas7Ref, -5-additionalPixelsToMove, -5-additionalPixelsToMove)
-        shiftCanvas(canvas5Ref, 10+additionalPixelsToMove, 10+additionalPixelsToMove)
+        shiftCanvas(canvas7Ref, randomPixelsToShift()-additionalPixelsToMove, randomPixelsToShift()-additionalPixelsToMove)
+        shiftCanvas(canvas5Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove)
 
         setUploading(true)
         

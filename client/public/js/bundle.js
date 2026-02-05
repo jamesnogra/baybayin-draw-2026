@@ -17237,10 +17237,13 @@ function App({ letter }) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
   };
+  const randomPixelsToShift = () => {
+    return Math.floor(Math.random() * 21) - 10;
+  };
   const submitCanvas = async () => {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
-    shiftCanvas(canvas7Ref, -5 - additionalPixelsToMove, -5 - additionalPixelsToMove);
-    shiftCanvas(canvas5Ref, 10 + additionalPixelsToMove, 10 + additionalPixelsToMove);
+    shiftCanvas(canvas7Ref, randomPixelsToShift() - additionalPixelsToMove, randomPixelsToShift() - additionalPixelsToMove);
+    shiftCanvas(canvas5Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove);
     setUploading(true);
     try {
       const canvasMain = canvasRef.current?.toDataURL("image/png");
@@ -17429,4 +17432,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=67E6810A78818CC964756E2164756E21
+//# debugId=F1498EB12A78B9B864756E2164756E21
