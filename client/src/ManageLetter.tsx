@@ -87,7 +87,7 @@ export default function ImageGallery({ letter }: ImageGalleryProps) {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1>Gallery for Letter: <span className="text-primary">{letter}</span></h1>
-        <a href="/" className="btn btn-primary">
+        <a href="/draw" className="btn btn-primary">
           Back to Drawing
         </a>
       </div>
@@ -98,7 +98,7 @@ export default function ImageGallery({ letter }: ImageGalleryProps) {
           <p>No images have been uploaded for the letter "{letter}" yet.</p>
           <hr />
           <p className="mb-0">
-            <a href="/" className="btn btn-primary">Start Drawing</a>
+            <a href={`/draw/${letter}`} className="btn btn-primary">Start Drawing</a>
           </p>
         </div>
       ) : (

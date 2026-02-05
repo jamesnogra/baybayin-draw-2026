@@ -29,7 +29,24 @@ app.get('/', (c) => {
         <link href="/client/public/css/baybayin.css" rel="stylesheet">
       </head>
       <body>
-        <div id="root"></div>
+        <h1>Baybayin Drawing Data Gatherer</h1>
+      </body>
+    </html>
+  `)
+})
+
+app.get('/draw/:letter?', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Baybayin Drawing Data Gatherer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/client/public/css/baybayin.css" rel="stylesheet">
+      </head>
+      <body>
+        <div id="root" data-letter="${c.req.param('letter') || ''}"></div>
         <script type="module" src="/client/public/js/bundle.js"></script>
       </body>
     </html>
@@ -74,7 +91,7 @@ app.get('/manage', (c) => {
               </svg>
               Download All
             </a>
-            <a href="/" class="btn btn-primary">Back to Drawing</a>
+            <a href="/draw" class="btn btn-primary">Back to Drawing</a>
           </div>
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
             ${letters.map(letter => `

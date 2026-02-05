@@ -17195,7 +17195,7 @@ function ImageGallery({ letter }) {
             ]
           }, undefined, true, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
-            href: "/",
+            href: "/draw",
             className: "btn btn-primary",
             children: "Back to Drawing"
           }, undefined, false, undefined, this)
@@ -17220,7 +17220,7 @@ function ImageGallery({ letter }) {
           /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
             className: "mb-0",
             children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
-              href: "/",
+              href: `/draw/${letter}`,
               className: "btn btn-primary",
               children: "Start Drawing"
             }, undefined, false, undefined, this)
@@ -17301,4 +17301,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=4AB1A5EE4F9B835564756E2164756E21
+//# debugId=A08F0016B9F24F5D64756E2164756E21

@@ -17390,21 +17390,24 @@ var letters_default = [
 
 // client/src/BaybayinMainCanvas.tsx
 var jsx_dev_runtime3 = __toESM(require_jsx_dev_runtime(), 1);
-function App2() {
-  const randomLetter = letters_default[Math.floor(Math.random() * letters_default.length)];
+function App2({ letter }) {
+  let currentLetter = letter;
+  if (currentLetter.length === 0) {
+    currentLetter = letters_default[Math.floor(Math.random() * letters_default.length)];
+  }
   return /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
     className: "baybayin-main-container",
     children: [
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-sample-container`,
         children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(BaybayinSampleImages_default, {
-          letter: randomLetter
+          letter: currentLetter
         }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-main-draw-container`,
         children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {
-          letter: randomLetter
+          letter: currentLetter
         }, undefined, false, undefined, this)
       }, undefined, false, undefined, this)
     ]
@@ -17414,8 +17417,11 @@ function App2() {
 // client/src/index.tsx
 var jsx_dev_runtime4 = __toESM(require_jsx_dev_runtime(), 1);
 var root = document.getElementById("root");
+var letter = root?.getAttribute("data-letter") || "";
 if (root) {
-  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App2, {}, undefined, false, undefined, this));
+  import_client.createRoot(root).render(/* @__PURE__ */ jsx_dev_runtime4.jsxDEV(App2, {
+    letter
+  }, undefined, false, undefined, this));
 }
 
-//# debugId=AC562FEC53A06E6264756E2164756E21
+//# debugId=430E2F9880CA88A964756E2164756E21
