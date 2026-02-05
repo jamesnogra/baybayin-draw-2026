@@ -17318,6 +17318,11 @@ function App({ letter }) {
             className: "btn btn-warning btn-lg",
             onClick: clearCanvas,
             children: "Clear"
+          }, undefined, false, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("a", {
+            href: "/manage",
+            className: "btn btn-secondary btn-lg",
+            children: "Manage"
           }, undefined, false, undefined, this)
         ]
       }, undefined, true, undefined, this)
@@ -17424,4 +17429,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=430E2F9880CA88A964756E2164756E21
+//# debugId=67E6810A78818CC964756E2164756E21

@@ -197,6 +197,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
                     {uploading ? 'Uploading...' : 'Submit'}
                 </button>
                 <button className="btn btn-warning btn-lg" onClick={clearCanvas}>Clear</button>
+                <a href="/manage" className="btn btn-secondary btn-lg">Manage</a>
             </div>
         </div>
     )
