@@ -17195,7 +17195,7 @@ function ImageGallery({ letter }) {
             ]
           }, undefined, true, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
-            href: "/draw",
+            href: `/draw/${letter}`,
             className: "btn btn-primary",
             children: "Back to Drawing"
           }, undefined, false, undefined, this)
@@ -17301,4 +17301,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=A08F0016B9F24F5D64756E2164756E21
+//# debugId=0935384B2ACD9C4C64756E2164756E21
