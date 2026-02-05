@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/bun'
 import { join } from 'path'
 import { mkdir, readdir, unlink } from 'fs/promises'
+import JSZip from 'jszip'
 import type { ApiResponse } from 'shared/dist'
 import sharp from 'sharp'
 import letters from '../../client/src/letters'
@@ -232,76 +233,33 @@ app.delete('/images/:letter/:filename', async (c) => {
   }
 })
 
-app.get('/download-all', async (c) => {
-  try {
-    const { spawn } = require('child_process');
-    
-    // Check if uploads directory exists and has content
-    try {
-      const files = await readdir(uploadsDir)
-      if (files.length === 0) {
-        return c.json({ 
-          success: false, 
-          message: 'No files to download' 
-        }, 404)
-      }
-    } catch (error) {
-      return c.json({ 
-        success: false, 
-        message: 'Uploads directory not found' 
-      }, 404)
+async function addDir(zip: JSZip, dir: string, base = "") {
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  for (const e of entries) {
+    const full = join(dir, e.name);
+    const zipPath = join(base, e.name);
+
+    if (e.isDirectory()) {
+      await addDir(zip, full, zipPath);
+    } else {
+      const data = await Bun.file(full).arrayBuffer();
+      zip.file(zipPath, data);
     }
-    
-    // Create a temporary zip file
-    const zipPath = join(projectRoot, `uploads-${Date.now()}.zip`)
-    
-    // Use system zip command to create the archive
-    await new Promise((resolve, reject) => {
-      // Change to uploads directory and zip everything inside it
-      const zip = spawn('zip', ['-r', zipPath, '.'], {
-        cwd: uploadsDir
-      })
-      
-      let stderr = ''
-      
-      zip.stderr.on('data', (data: Buffer) => {
-        stderr += data.toString()
-      })
-      
-      zip.on('close', (code: number) => {
-        if (code === 0) {
-          resolve(true)
-        } else {
-          reject(new Error(`Zip process exited with code ${code}: ${stderr}`))
-        }
-      })
-      
-      zip.on('error', (err: Error) => {
-        reject(err)
-      })
-    })
-    
-    // Read the zip file
-    const zipFile = Bun.file(zipPath)
-    const buffer = await zipFile.arrayBuffer()
-    
-    // Clean up the temporary zip file
-    await unlink(zipPath)
-    
-    // Send the zip file
-    return c.body(buffer, 200, {
-      'Content-Type': 'application/zip',
-      'Content-Disposition': `attachment; filename="baybayin-uploads-${Date.now()}.zip"`
-    })
-    
-  } catch (error) {
-    console.error('Download error:', error)
-    return c.json({ 
-      success: false, 
-      message: 'Failed to create download: ' + (error as Error).message 
-    }, 500)
   }
-})
+}
+
+app.get("/download-all", async (c) => {
+  const zip = new JSZip();
+  await addDir(zip, uploadsDir);
+
+  const buffer = await zip.generateAsync({ type: "arraybuffer" });
+
+  return c.body(buffer, 200, {
+    "Content-Type": "application/zip",
+    "Content-Disposition": `attachment; filename="baybayin-uploads.zip"`
+  });
+});
 
 app.get('/hello', async (c) => {
 
