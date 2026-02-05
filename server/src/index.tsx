@@ -29,7 +29,8 @@ app.get('/', (c) => {
         <link href="/client/public/css/baybayin.css" rel="stylesheet">
       </head>
       <body>
-        <h1>Baybayin Drawing Data Gatherer</h1>
+        <h1 class="text-center">Baybayin Drawing Data Gatherer</h1>
+        <div class="text-center"><a href="/draw" class="btn btn-primary btn-lg">Start Drawing</a></div>
       </body>
     </html>
   `)

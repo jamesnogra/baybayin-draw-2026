@@ -17198,6 +17198,11 @@ function ImageGallery({ letter }) {
             href: `/draw/${letter}`,
             className: "btn btn-primary",
             children: "Back to Drawing"
+          }, undefined, false, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("a", {
+            href: "/manage",
+            className: "btn btn-primary",
+            children: "Manage"
           }, undefined, false, undefined, this)
         ]
       }, undefined, true, undefined, this),
@@ -17227,66 +17232,70 @@ function ImageGallery({ letter }) {
           }, undefined, false, undefined, this)
         ]
       }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4",
-        children: images.map((image) => /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-          className: "col",
-          children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-            className: "card h-100 shadow-sm",
-            children: [
-              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
-                src: image.url,
-                className: "card-img-top",
-                alt: image.filename,
-                style: { height: "250px", objectFit: "contain", backgroundColor: "#f8f9fa" }
-              }, undefined, false, undefined, this),
-              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-                className: "card-body",
+        children: [
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+            className: "mt-4 mb-4",
+            children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+              className: "text-muted",
+              children: [
+                "Total images: ",
+                images.length
+              ]
+            }, undefined, true, undefined, this)
+          }, undefined, false, undefined, this),
+          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+            className: "row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4",
+            children: images.map((image) => /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+              className: "col",
+              children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+                className: "card h-100 shadow-sm",
                 children: [
-                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
-                    className: "card-text text-muted small mb-2",
-                    children: formatTimestamp(image.timestamp)
+                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("img", {
+                    src: image.url,
+                    className: "card-img-top",
+                    alt: image.filename,
+                    style: { height: "250px", objectFit: "contain", backgroundColor: "#f8f9fa" }
                   }, undefined, false, undefined, this),
-                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
-                    className: "card-text small text-truncate",
-                    title: image.filename,
-                    children: image.filename
+                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+                    className: "card-body",
+                    children: [
+                      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+                        className: "card-text text-muted small mb-2",
+                        children: formatTimestamp(image.timestamp)
+                      }, undefined, false, undefined, this),
+                      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
+                        className: "card-text small text-truncate",
+                        title: image.filename,
+                        children: image.filename
+                      }, undefined, false, undefined, this)
+                    ]
+                  }, undefined, true, undefined, this),
+                  /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
+                    className: "card-footer bg-transparent",
+                    children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("button", {
+                      className: "btn btn-danger btn-sm w-100",
+                      onClick: () => deleteImage(image.filename),
+                      disabled: deleting === image.filename,
+                      children: deleting === image.filename ? /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
+                        children: [
+                          /* @__PURE__ */ jsx_dev_runtime.jsxDEV("span", {
+                            className: "spinner-border spinner-border-sm me-2",
+                            role: "status",
+                            "aria-hidden": "true"
+                          }, undefined, false, undefined, this),
+                          "Deleting..."
+                        ]
+                      }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
+                        children: "Delete"
+                      }, undefined, false, undefined, this)
+                    }, undefined, false, undefined, this)
                   }, undefined, false, undefined, this)
                 ]
-              }, undefined, true, undefined, this),
-              /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-                className: "card-footer bg-transparent",
-                children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("button", {
-                  className: "btn btn-danger btn-sm w-100",
-                  onClick: () => deleteImage(image.filename),
-                  disabled: deleting === image.filename,
-                  children: deleting === image.filename ? /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
-                    children: [
-                      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("span", {
-                        className: "spinner-border spinner-border-sm me-2",
-                        role: "status",
-                        "aria-hidden": "true"
-                      }, undefined, false, undefined, this),
-                      "Deleting..."
-                    ]
-                  }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
-                    children: "Delete"
-                  }, undefined, false, undefined, this)
-                }, undefined, false, undefined, this)
-              }, undefined, false, undefined, this)
-            ]
-          }, undefined, true, undefined, this)
-        }, image.filename, false, undefined, this))
-      }, undefined, false, undefined, this),
-      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
-        className: "mt-4 mb-4",
-        children: /* @__PURE__ */ jsx_dev_runtime.jsxDEV("p", {
-          className: "text-muted",
-          children: [
-            "Total images: ",
-            images.length
-          ]
-        }, undefined, true, undefined, this)
-      }, undefined, false, undefined, this)
+              }, undefined, true, undefined, this)
+            }, image.filename, false, undefined, this))
+          }, undefined, false, undefined, this)
+        ]
+      }, undefined, true, undefined, this)
     ]
   }, undefined, true, undefined, this);
 }
@@ -17301,4 +17310,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=0935384B2ACD9C4C64756E2164756E21
+//# debugId=8148CD12A308259864756E2164756E21

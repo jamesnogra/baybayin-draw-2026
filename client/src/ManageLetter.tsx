@@ -90,6 +90,9 @@ export default function ImageGallery({ letter }: ImageGalleryProps) {
         <a href={`/draw/${letter}`} className="btn btn-primary">
           Back to Drawing
         </a>
+        <a href="/manage" className="btn btn-primary">
+          Manage
+        </a>
       </div>
 
       {images.length === 0 ? (
@@ -102,49 +105,50 @@ export default function ImageGallery({ letter }: ImageGalleryProps) {
           </p>
         </div>
       ) : (
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-          {images.map((image) => (
-            <div key={image.filename} className="col">
-              <div className="card h-100 shadow-sm">
-                <img 
-                  src={image.url} 
-                  className="card-img-top" 
-                  alt={image.filename}
-                  style={{ height: '250px', objectFit: 'contain', backgroundColor: '#f8f9fa' }}
-                />
-                <div className="card-body">
-                  <p className="card-text text-muted small mb-2">
-                    {formatTimestamp(image.timestamp)}
-                  </p>
-                  <p className="card-text small text-truncate" title={image.filename}>
-                    {image.filename}
-                  </p>
-                </div>
-                <div className="card-footer bg-transparent">
-                  <button
-                    className="btn btn-danger btn-sm w-100"
-                    onClick={() => deleteImage(image.filename)}
-                    disabled={deleting === image.filename}
-                  >
-                    {deleting === image.filename ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        Deleting...
-                      </>
-                    ) : (
-                      <>Delete</>
-                    )}
-                  </button>
+        <div>
+          <div className="mt-4 mb-4">
+            <p className="text-muted">Total images: {images.length}</p>
+          </div>
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            {images.map((image) => (
+              <div key={image.filename} className="col">
+                <div className="card h-100 shadow-sm">
+                  <img 
+                    src={image.url} 
+                    className="card-img-top" 
+                    alt={image.filename}
+                    style={{ height: '250px', objectFit: 'contain', backgroundColor: '#f8f9fa' }}
+                  />
+                  <div className="card-body">
+                    <p className="card-text text-muted small mb-2">
+                      {formatTimestamp(image.timestamp)}
+                    </p>
+                    <p className="card-text small text-truncate" title={image.filename}>
+                      {image.filename}
+                    </p>
+                  </div>
+                  <div className="card-footer bg-transparent">
+                    <button
+                      className="btn btn-danger btn-sm w-100"
+                      onClick={() => deleteImage(image.filename)}
+                      disabled={deleting === image.filename}
+                    >
+                      {deleting === image.filename ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          Deleting...
+                        </>
+                      ) : (
+                        <>Delete</>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
-
-      <div className="mt-4 mb-4">
-        <p className="text-muted">Total images: {images.length}</p>
-      </div>
     </div>
   )
 }
