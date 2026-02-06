@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/bun'
 import { join } from 'path'
 import { mkdir, readdir, unlink } from 'fs/promises'
+import { basicAuth } from 'hono/basic-auth'
 import JSZip from 'jszip'
 import type { ApiResponse } from 'shared/dist'
 import sharp from 'sharp'
@@ -18,6 +19,14 @@ const app = new Hono()
 app.use(cors())
 app.use('/client/public/*', serveStatic({ root: projectRoot }))
 app.use('/client/public/uploads/*', serveStatic({ root: projectRoot }))
+
+app.use(
+  '/manage/*',
+  basicAuth({
+    username: process.env.API_USERNAME || 'admin',
+    password: process.env.API_PASSWORD || 'admin',
+  })
+)
 
 app.get('/', (c) => {
   return c.html(`
@@ -251,21 +260,21 @@ async function addDir(zip: JSZip, dir: string, base = "") {
 }
 
 app.get("/download-all", async (c) => {
-  const zip = new JSZip();
-  await addDir(zip, uploadsDir);
+  const zip = new JSZip()
+  await addDir(zip, uploadsDir)
 
-  const buffer = await zip.generateAsync({ type: "arraybuffer" });
+  const buffer = await zip.generateAsync({ type: "arraybuffer" })
 
   return c.body(buffer, 200, {
     "Content-Type": "application/zip",
     "Content-Disposition": `attachment; filename="baybayin-uploads.zip"`
-  });
-});
+  })
+})
 
 app.get('/hello', async (c) => {
 
   const data: ApiResponse = {
-    message: "Hello BHVR!",
+    message: `Hello ${process.env.API_USERNAME} from BHVR!`,
     success: true
   }
 
