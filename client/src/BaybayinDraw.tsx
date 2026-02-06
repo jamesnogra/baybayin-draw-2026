@@ -126,11 +126,15 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         return Math.floor(Math.random() * 21) - 10
     }
 
+    const randomAngle = () => {
+        return Math.floor(Math.random() * 11) - 5
+    }
+
     const submitCanvas = async () => {
         // Do not add movement too much if in mobile view
         const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10
-        shiftCanvas(canvas7Ref, randomPixelsToShift()-additionalPixelsToMove, randomPixelsToShift()-additionalPixelsToMove)
-        shiftCanvas(canvas5Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove)
+        shiftCanvas(canvas7Ref, randomPixelsToShift()-additionalPixelsToMove, randomPixelsToShift()-additionalPixelsToMove, randomAngle())
+        shiftCanvas(canvas5Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove, randomAngle())
 
         setUploading(true)
         
@@ -168,17 +172,40 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         }
     }
 
-    const shiftCanvas = (ref: any, shiftX: number, shiftY: number) => {
+    const shiftCanvas = (ref: any, shiftX: number, shiftY: number, angleDegrees: number = 45) => {
         const currentCanvas = ref.current
         if (!currentCanvas) return
         const ctx = currentCanvas.getContext('2d')
         if (!ctx) return
+        
         // Get the current canvas image data
         const imageData = ctx.getImageData(0, 0, currentCanvas.width, currentCanvas.height)
-        // Clear the canvas
+        
+        // Create a temporary canvas to hold the original image
+        const tempCanvas = document.createElement('canvas')
+        tempCanvas.width = currentCanvas.width
+        tempCanvas.height = currentCanvas.height
+        const tempCtx = tempCanvas.getContext('2d')
+        if (!tempCtx) return
+        tempCtx.putImageData(imageData, 0, 0)
+        
+        // Clear the main canvas
         ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height)
-        // Draw the image data shifted
-        ctx.putImageData(imageData, shiftX, shiftY)
+        
+        // Apply transformations
+        ctx.save()
+        
+        // Move to center, rotate, then move back
+        const centerX = currentCanvas.width / 2
+        const centerY = currentCanvas.height / 2
+        ctx.translate(centerX + shiftX, centerY + shiftY)
+        ctx.rotate((angleDegrees * Math.PI) / 180)
+        ctx.translate(-centerX, -centerY)
+        
+        // Draw the rotated image
+        ctx.drawImage(tempCanvas, 0, 0)
+        
+        ctx.restore()
     }
 
     return (

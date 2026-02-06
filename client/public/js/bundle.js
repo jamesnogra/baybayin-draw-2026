@@ -17240,10 +17240,13 @@ function App({ letter }) {
   const randomPixelsToShift = () => {
     return Math.floor(Math.random() * 21) - 10;
   };
+  const randomAngle = () => {
+    return Math.floor(Math.random() * 11) - 5;
+  };
   const submitCanvas = async () => {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
-    shiftCanvas(canvas7Ref, randomPixelsToShift() - additionalPixelsToMove, randomPixelsToShift() - additionalPixelsToMove);
-    shiftCanvas(canvas5Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove);
+    shiftCanvas(canvas7Ref, randomPixelsToShift() - additionalPixelsToMove, randomPixelsToShift() - additionalPixelsToMove, randomAngle());
+    shiftCanvas(canvas5Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
     setUploading(true);
     try {
       const canvasMain = canvasRef.current?.toDataURL("image/png");
@@ -17275,7 +17278,7 @@ function App({ letter }) {
       window.location.reload();
     }
   };
-  const shiftCanvas = (ref, shiftX, shiftY) => {
+  const shiftCanvas = (ref, shiftX, shiftY, angleDegrees = 45) => {
     const currentCanvas = ref.current;
     if (!currentCanvas)
       return;
@@ -17283,8 +17286,22 @@ function App({ letter }) {
     if (!ctx)
       return;
     const imageData = ctx.getImageData(0, 0, currentCanvas.width, currentCanvas.height);
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = currentCanvas.width;
+    tempCanvas.height = currentCanvas.height;
+    const tempCtx = tempCanvas.getContext("2d");
+    if (!tempCtx)
+      return;
+    tempCtx.putImageData(imageData, 0, 0);
     ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
-    ctx.putImageData(imageData, shiftX, shiftY);
+    ctx.save();
+    const centerX = currentCanvas.width / 2;
+    const centerY = currentCanvas.height / 2;
+    ctx.translate(centerX + shiftX, centerY + shiftY);
+    ctx.rotate(angleDegrees * Math.PI / 180);
+    ctx.translate(-centerX, -centerY);
+    ctx.drawImage(tempCanvas, 0, 0);
+    ctx.restore();
   };
   return /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
     className: "baybayin-draw-container",
@@ -17432,4 +17449,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=F1498EB12A78B9B864756E2164756E21
+//# debugId=D0DA04B53214226A64756E2164756E21
