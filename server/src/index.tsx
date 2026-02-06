@@ -113,9 +113,9 @@ app.get('/manage', (c) => {
 app.post('/upload-canvas', async (c) => {
   try {
     const body = await c.req.json()
-    const { canvasMain, canvas7, canvas5, letter } = body
+    const { canvasMain, canvas7, canvas5, canvas12, letter } = body
 
-    if (!canvasMain || !canvas7 || !canvas5) {
+    if (!canvasMain || !canvas7 || !canvas5 || !canvas12) {
       return c.json({ 
         success: false, 
         message: 'Missing canvas data' 
@@ -152,14 +152,15 @@ app.post('/upload-canvas', async (c) => {
     const filenameMain = await saveImage(canvasMain, 'main')
     const filename7 = await saveImage(canvas7, '7')
     const filename5 = await saveImage(canvas5, '5')
-
+    const filename12 = await saveImage(canvas12, '12')
     return c.json({
       success: true,
       message: 'Canvases uploaded successfully',
       files: {
         main: filenameMain,
         canvas7: filename7,
-        canvas5: filename5
+        canvas5: filename5,
+        canvas12: filename12
       }
     })
 

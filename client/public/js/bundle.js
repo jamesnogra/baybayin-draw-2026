@@ -17139,6 +17139,7 @@ function App({ letter }) {
   const canvasRef = import_react.useRef(null);
   const canvas7Ref = import_react.useRef(null);
   const canvas5Ref = import_react.useRef(null);
+  const canvas12Ref = import_react.useRef(null);
   const [isDrawing, setIsDrawing] = import_react.useState(false);
   const [uploading, setUploading] = import_react.useState(false);
   import_react.useEffect(() => {
@@ -17156,7 +17157,7 @@ function App({ letter }) {
       ctx.lineJoin = "round";
       ctx.lineWidth = 10;
       ctx.strokeStyle = "#000";
-      [canvas7Ref, canvas5Ref].forEach((ref, idx) => {
+      [canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref, idx) => {
         const c = ref.current;
         if (!c)
           return;
@@ -17167,7 +17168,13 @@ function App({ letter }) {
         c.height = rect.height;
         context.lineCap = "round";
         context.lineJoin = "round";
-        context.lineWidth = idx === 0 ? 7 : 5;
+        if (idx === 0) {
+          context.lineWidth = 7;
+        } else if (idx === 1) {
+          context.lineWidth = 5;
+        } else if (idx === 2) {
+          context.lineWidth = 12;
+        }
         context.strokeStyle = "#000";
       });
     }, 0);
@@ -17194,7 +17201,7 @@ function App({ letter }) {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17212,7 +17219,7 @@ function App({ letter }) {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17227,7 +17234,7 @@ function App({ letter }) {
     setIsDrawing(false);
   };
   const clearCanvas = () => {
-    [canvasRef, canvas7Ref, canvas5Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
       const canvas = ref.current;
       if (!canvas)
         return;
@@ -17247,11 +17254,13 @@ function App({ letter }) {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
     shiftCanvas(canvas7Ref, randomPixelsToShift() - additionalPixelsToMove, randomPixelsToShift() - additionalPixelsToMove, randomAngle());
     shiftCanvas(canvas5Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
+    shiftCanvas(canvas12Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
     setUploading(true);
     try {
       const canvasMain = canvasRef.current?.toDataURL("image/png");
       const canvas7 = canvas7Ref.current?.toDataURL("image/png");
       const canvas5 = canvas5Ref.current?.toDataURL("image/png");
+      const canvas12 = canvas12Ref.current?.toDataURL("image/png");
       const response = await fetch("/upload-canvas", {
         method: "POST",
         headers: {
@@ -17261,6 +17270,7 @@ function App({ letter }) {
           canvasMain,
           canvas7,
           canvas5,
+          canvas12,
           letter
         })
       });
@@ -17323,6 +17333,10 @@ function App({ letter }) {
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
         ref: canvas5Ref,
+        className: "baybayin-main-canvas baybayin-hide-canvas"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
+        ref: canvas12Ref,
         className: "baybayin-main-canvas baybayin-hide-canvas"
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
@@ -17449,4 +17463,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=D0DA04B53214226A64756E2164756E21
+//# debugId=A855D6D3FB192FCC64756E2164756E21
