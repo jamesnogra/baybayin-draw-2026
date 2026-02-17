@@ -273,9 +273,8 @@ var require_scheduler_development = __commonJS((exports) => {
 
 // node_modules/scheduler/index.js
 var require_scheduler = __commonJS((exports, module) => {
-  var scheduler_development = __toESM(require_scheduler_development());
   if (false) {} else {
-    module.exports = scheduler_development;
+    module.exports = require_scheduler_development();
   }
 });
 
@@ -1104,9 +1103,8 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
 
 // node_modules/react/index.js
 var require_react = __commonJS((exports, module) => {
-  var react_development = __toESM(require_react_development());
   if (false) {} else {
-    module.exports = react_development;
+    module.exports = require_react_development();
   }
 });
 
@@ -1295,9 +1293,8 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
 
 // node_modules/react-dom/index.js
 var require_react_dom = __commonJS((exports, module) => {
-  var react_dom_development = __toESM(require_react_dom_development());
   if (false) {} else {
-    module.exports = react_dom_development;
+    module.exports = require_react_dom_development();
   }
 });
 
@@ -16871,9 +16868,8 @@ You might need to use a local HTTP server (instead of file://): https://react.de
 
 // node_modules/react-dom/client.js
 var require_client = __commonJS((exports, module) => {
-  var react_dom_client_development = __toESM(require_react_dom_client_development());
   if (false) {} else {
-    module.exports = react_dom_client_development;
+    module.exports = require_react_dom_client_development();
   }
 });
 
@@ -17094,9 +17090,8 @@ React keys must be passed directly to JSX without using spread:
 
 // node_modules/react/jsx-dev-runtime.js
 var require_jsx_dev_runtime = __commonJS((exports, module) => {
-  var react_jsx_dev_runtime_development = __toESM(require_react_jsx_dev_runtime_development());
   if (false) {} else {
-    module.exports = react_jsx_dev_runtime_development;
+    module.exports = require_react_jsx_dev_runtime_development();
   }
 });
 
@@ -17310,4 +17305,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=8148CD12A308259864756E2164756E21
+//# debugId=3A4BDCEECD7CF76E64756E2164756E21

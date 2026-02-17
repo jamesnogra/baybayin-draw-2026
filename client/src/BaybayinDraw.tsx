@@ -7,7 +7,7 @@ type BaybayinSampleImagesProps = {
 export default function App({ letter }: BaybayinSampleImagesProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const canvas7Ref = useRef<HTMLCanvasElement>(null)
-    const canvas5Ref = useRef<HTMLCanvasElement>(null)
+    const canvas17Ref = useRef<HTMLCanvasElement>(null)
     const canvas12Ref = useRef<HTMLCanvasElement>(null)
     const [isDrawing, setIsDrawing] = useState(false)
     const [uploading, setUploading] = useState(false)
@@ -31,11 +31,11 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
             // Configure drawing style
             ctx.lineCap = 'round'
             ctx.lineJoin = 'round'
-            ctx.lineWidth = 10
+            ctx.lineWidth = 20
             ctx.strokeStyle = '#000';
 
             // Initialize the other canvases
-            [canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref, idx) => {
+            [canvas7Ref, canvas17Ref, canvas12Ref].forEach((ref, idx) => {
                 const c = ref.current
                 if (!c) return
                 const context = c.getContext('2d')
@@ -48,7 +48,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
                 if (idx === 0) {
                     context.lineWidth = 7
                 } else if (idx === 1) {
-                    context.lineWidth = 5
+                    context.lineWidth = 17
                 } else if (idx === 2) {
                     context.lineWidth = 12
                 }
@@ -85,7 +85,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         if (!coords) return
 
         // Start path on all three canvases
-        [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach(ref => {
             const c = ref.current
             if (!c) return
             const ctx = c.getContext('2d')
@@ -105,7 +105,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         if (!coords) return
 
         // Draw on all three canvases
-        [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach(ref => {
             const c = ref.current
             if (!c) return
             const ctx = c.getContext('2d')
@@ -120,7 +120,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
     }
 
     const clearCanvas = () => {
-        [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach(ref => {
+        [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach(ref => {
             const canvas = ref.current
             if (!canvas) return
             const ctx = canvas.getContext('2d')
@@ -134,14 +134,14 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
     }
 
     const randomAngle = () => {
-        return Math.floor(Math.random() * 11) - 5
+        return Math.floor(Math.random() * 21) - 10
     }
 
     const submitCanvas = async () => {
         // Do not add movement too much if in mobile view
         const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10
         shiftCanvas(canvas7Ref, randomPixelsToShift()-additionalPixelsToMove, randomPixelsToShift()-additionalPixelsToMove, randomAngle())
-        shiftCanvas(canvas5Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove, randomAngle())
+        shiftCanvas(canvas17Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove, randomAngle())
         shiftCanvas(canvas12Ref, randomPixelsToShift()+additionalPixelsToMove, randomPixelsToShift()+additionalPixelsToMove, randomAngle())
 
         setUploading(true)
@@ -149,7 +149,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
         try {
             const canvasMain = canvasRef.current?.toDataURL('image/png')
             const canvas7 = canvas7Ref.current?.toDataURL('image/png')
-            const canvas5 = canvas5Ref.current?.toDataURL('image/png')
+            const canvas17 = canvas17Ref.current?.toDataURL('image/png')
             const canvas12 = canvas12Ref.current?.toDataURL('image/png')
             const response = await fetch('/upload-canvas', {
                 method: 'POST',
@@ -159,7 +159,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
                 body: JSON.stringify({
                     canvasMain,
                     canvas7,
-                    canvas5,
+                    canvas17,
                     canvas12,
                     letter
                 })
@@ -231,7 +231,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
                 onTouchEnd={stopDrawing}
             />
             <canvas ref={canvas7Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
-            <canvas ref={canvas5Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
+            <canvas ref={canvas17Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <canvas ref={canvas12Ref} className="baybayin-main-canvas baybayin-hide-canvas" />
             <div className="baybayin-draw-buttons">
                 <button className="btn btn-success btn-lg" onClick={submitCanvas} disabled={uploading}>

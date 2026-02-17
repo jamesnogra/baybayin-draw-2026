@@ -273,9 +273,8 @@ var require_scheduler_development = __commonJS((exports) => {
 
 // node_modules/scheduler/index.js
 var require_scheduler = __commonJS((exports, module) => {
-  var scheduler_development = __toESM(require_scheduler_development());
   if (false) {} else {
-    module.exports = scheduler_development;
+    module.exports = require_scheduler_development();
   }
 });
 
@@ -1104,9 +1103,8 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
 
 // node_modules/react/index.js
 var require_react = __commonJS((exports, module) => {
-  var react_development = __toESM(require_react_development());
   if (false) {} else {
-    module.exports = react_development;
+    module.exports = require_react_development();
   }
 });
 
@@ -1295,9 +1293,8 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
 
 // node_modules/react-dom/index.js
 var require_react_dom = __commonJS((exports, module) => {
-  var react_dom_development = __toESM(require_react_dom_development());
   if (false) {} else {
-    module.exports = react_dom_development;
+    module.exports = require_react_dom_development();
   }
 });
 
@@ -16871,9 +16868,8 @@ You might need to use a local HTTP server (instead of file://): https://react.de
 
 // node_modules/react-dom/client.js
 var require_client = __commonJS((exports, module) => {
-  var react_dom_client_development = __toESM(require_react_dom_client_development());
   if (false) {} else {
-    module.exports = react_dom_client_development;
+    module.exports = require_react_dom_client_development();
   }
 });
 
@@ -17094,9 +17090,8 @@ React keys must be passed directly to JSX without using spread:
 
 // node_modules/react/jsx-dev-runtime.js
 var require_jsx_dev_runtime = __commonJS((exports, module) => {
-  var react_jsx_dev_runtime_development = __toESM(require_react_jsx_dev_runtime_development());
   if (false) {} else {
-    module.exports = react_jsx_dev_runtime_development;
+    module.exports = require_react_jsx_dev_runtime_development();
   }
 });
 
@@ -17138,7 +17133,7 @@ var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 function App({ letter }) {
   const canvasRef = import_react.useRef(null);
   const canvas7Ref = import_react.useRef(null);
-  const canvas5Ref = import_react.useRef(null);
+  const canvas17Ref = import_react.useRef(null);
   const canvas12Ref = import_react.useRef(null);
   const [isDrawing, setIsDrawing] = import_react.useState(false);
   const [uploading, setUploading] = import_react.useState(false);
@@ -17155,9 +17150,9 @@ function App({ letter }) {
       canvas.height = rect.height;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 20;
       ctx.strokeStyle = "#000";
-      [canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref, idx) => {
+      [canvas7Ref, canvas17Ref, canvas12Ref].forEach((ref, idx) => {
         const c = ref.current;
         if (!c)
           return;
@@ -17171,7 +17166,7 @@ function App({ letter }) {
         if (idx === 0) {
           context.lineWidth = 7;
         } else if (idx === 1) {
-          context.lineWidth = 5;
+          context.lineWidth = 17;
         } else if (idx === 2) {
           context.lineWidth = 12;
         }
@@ -17201,7 +17196,7 @@ function App({ letter }) {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17219,7 +17214,7 @@ function App({ letter }) {
     const coords = getCoordinates(e);
     if (!coords)
       return;
-    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach((ref) => {
       const c = ref.current;
       if (!c)
         return;
@@ -17234,7 +17229,7 @@ function App({ letter }) {
     setIsDrawing(false);
   };
   const clearCanvas = () => {
-    [canvasRef, canvas7Ref, canvas5Ref, canvas12Ref].forEach((ref) => {
+    [canvasRef, canvas7Ref, canvas17Ref, canvas12Ref].forEach((ref) => {
       const canvas = ref.current;
       if (!canvas)
         return;
@@ -17248,18 +17243,18 @@ function App({ letter }) {
     return Math.floor(Math.random() * 21) - 10;
   };
   const randomAngle = () => {
-    return Math.floor(Math.random() * 11) - 5;
+    return Math.floor(Math.random() * 21) - 10;
   };
   const submitCanvas = async () => {
     const additionalPixelsToMove = window.innerWidth < 768 ? 0 : 10;
     shiftCanvas(canvas7Ref, randomPixelsToShift() - additionalPixelsToMove, randomPixelsToShift() - additionalPixelsToMove, randomAngle());
-    shiftCanvas(canvas5Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
+    shiftCanvas(canvas17Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
     shiftCanvas(canvas12Ref, randomPixelsToShift() + additionalPixelsToMove, randomPixelsToShift() + additionalPixelsToMove, randomAngle());
     setUploading(true);
     try {
       const canvasMain = canvasRef.current?.toDataURL("image/png");
       const canvas7 = canvas7Ref.current?.toDataURL("image/png");
-      const canvas5 = canvas5Ref.current?.toDataURL("image/png");
+      const canvas17 = canvas17Ref.current?.toDataURL("image/png");
       const canvas12 = canvas12Ref.current?.toDataURL("image/png");
       const response = await fetch("/upload-canvas", {
         method: "POST",
@@ -17269,7 +17264,7 @@ function App({ letter }) {
         body: JSON.stringify({
           canvasMain,
           canvas7,
-          canvas5,
+          canvas17,
           canvas12,
           letter
         })
@@ -17332,7 +17327,7 @@ function App({ letter }) {
         className: "baybayin-main-canvas baybayin-hide-canvas"
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
-        ref: canvas5Ref,
+        ref: canvas17Ref,
         className: "baybayin-main-canvas baybayin-hide-canvas"
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
@@ -17463,4 +17458,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=A855D6D3FB192FCC64756E2164756E21
+//# debugId=0CFB80873777525764756E2164756E21
