@@ -72,6 +72,10 @@
     display: none;
 }
 
+.samples-label {
+  width: 100%;
+}
+
 /* Specifically for widths strictly less than 768px */
 @media (width < 768px) {
 

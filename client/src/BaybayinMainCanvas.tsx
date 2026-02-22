@@ -17,6 +17,7 @@ export default function App({ letter }: ImageGalleryProps) {
             <div className={`baybayin-auto-height baybayin-sample-container`}>
                 <BaybayinSampleImages letter={currentLetter} />
             </div>
+            <div class="text-center">Samples</div>
             <div className={`baybayin-auto-height baybayin-main-draw-container`}>
                 <BaybayinDraw letter={currentLetter} />
             </div>

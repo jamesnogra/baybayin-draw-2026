@@ -17311,6 +17311,10 @@ function App({ letter }) {
   return /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
     className: "baybayin-draw-container",
     children: [
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+        class: "text-center",
+        children: "Draw Here"
+      }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("canvas", {
         ref: canvasRef,
         className: "baybayin-main-canvas",
@@ -17439,6 +17443,10 @@ function App2({ letter }) {
         }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
+        class: "text-center",
+        children: "Samples"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("div", {
         className: `baybayin-auto-height baybayin-main-draw-container`,
         children: /* @__PURE__ */ jsx_dev_runtime3.jsxDEV(App, {
           letter: currentLetter
@@ -17458,4 +17466,4 @@ if (root) {
   }, undefined, false, undefined, this));
 }
 
-//# debugId=0CFB80873777525764756E2164756E21
+//# debugId=64E58B7A3B70F58564756E2164756E21

@@ -219,6 +219,7 @@ export default function App({ letter }: BaybayinSampleImagesProps) {
 
     return (
         <div className="baybayin-draw-container">
+            <div class="text-center">Draw Here</div>
             <canvas
                 ref={canvasRef}
                 className="baybayin-main-canvas"
